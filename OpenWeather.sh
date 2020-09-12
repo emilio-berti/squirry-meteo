@@ -1,6 +1,6 @@
 #!/bin/bash
 
-KEY=8d6db5891cb01949929a32e3c74bd955
+KEY=$(cat apikey.txt)
 
 LeipzigLat=51.33962
 LeipzigLon=12.37129
