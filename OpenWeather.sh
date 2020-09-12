@@ -11,6 +11,9 @@ AarhusLon=10.203921
 PratoLat=43.935718
 PratoLon=11.094147
 
+StaraLat=42.425777
+StaraLon=25.634464
+
 meteo_lon_lat() {
 	curl -s http://api.openweathermap.org/data/2.5/onecall?lat=$1\&lon=$2\&appid={$KEY}\&units=metric -o tmp.json
 	python3.7 -m json.tool tmp.json > tmp.txt
@@ -50,10 +53,13 @@ echo
 echo ' ----------------- Leipzig ----------------- '
 meteo_lon_lat $LeipzigLat $LeipzigLon
 
-echo ' ----------------- Aarhus ----------------- '
+echo ' ----------------- Aarhus ------------------ '
 meteo_lon_lat $AarhusLat $AarhusLon
 
-echo ' ----------------- Prato ----------------- '
+echo ' ----------------- Prato ------------------- '
 meteo_lon_lat $PratoLat $PratoLon
+
+echo ' ----------------- Stara Zagora ------------ '
+meteo_lon_lat $StaraLat $StaraLon
 
 rm tmp*

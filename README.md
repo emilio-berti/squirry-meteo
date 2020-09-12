@@ -1,1 +1,1 @@
-Store the OpenWather API key in `apikey.txt`.
+Store the OpenWeather API key in `apikey.txt`.
