@@ -1,0 +1,1 @@
+Store the OpenWather API key in `apikey.txt`.
