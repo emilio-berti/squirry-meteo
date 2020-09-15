@@ -1,5 +1,5 @@
 Store the OpenWeather API key in `apikey.txt`.
 
-Options
+Options:
 
-	1. -v : verbose, print the temperature and conditions in the terminal
+   1. -v      verbose, print the temperature and conditions in the terminal
