@@ -23,7 +23,7 @@ meteo_lon_lat() {
 	tail -n +275 tmp.txt | head -n 1010 > tmp_forecast.txt
 	grep -wE 'feels_like|description|dt' tmp_forecast.txt | tr -s ' ' | tr -d '",' > tmp_hourly.txt
 	R CMD BATCH format_forecasts.R #using tidyverse magic
-	#sunrise/set
+	# sunrise/set
 	while read line
 	do
 		what=$(echo $line | cut -d ":" -f 1 | tr -d '"')
@@ -32,7 +32,7 @@ meteo_lon_lat() {
 		echo '    ' $what at $(date -d @$at | cut -d " " -f 5,6)
 	done < tmp_sun.txt
 	echo 
-	#temperature
+	# temperature
 	while read line
 	do
 		what=$(echo $line | cut -d ":" -f 1 | tr -d '"')
@@ -63,8 +63,8 @@ meteo_lon_lat() {
 		temp=$(echo $line | cut -d ',' -f 2 | tr -d ' ')
 		echo $(date -d @$at +'%D %H') $temp
 	done < tmp_hourly.txt > $3.csv
-	gnuplot -e "filename='$3.csv'" plot_temperature.p
-	feh tmp.png
+	# gnuplot -e "filename='$3.csv'" plot_temperature.p
+	# feh tmp.png
 }
 
 #current date and time
@@ -72,18 +72,33 @@ echo
 date
 echo
 
-echo ' ----------------- Leipzig ----------------- '
-meteo_lon_lat $LeipzigLat $LeipzigLon Leipzig
+if [ -n $1 ]
+then
+	if [[ $1 == '-v' ]]
+	then
+		echo ' ----------------- Leipzig ----------------- '
+		meteo_lon_lat $LeipzigLat $LeipzigLon Leipzig
 
-echo ' ----------------- Aarhus ------------------ '
-meteo_lon_lat $AarhusLat $AarhusLon Aarhus
+		echo ' ----------------- Aarhus ------------------ '
+		meteo_lon_lat $AarhusLat $AarhusLon Aarhus
 
-echo ' ----------------- Prato ------------------- '
-meteo_lon_lat $PratoLat $PratoLon Prato
+		echo ' ----------------- Prato ------------------- '
+		meteo_lon_lat $PratoLat $PratoLon Prato
 
-echo ' ----------------- Stara Zagora ------------ '
-meteo_lon_lat $StaraLat $StaraLon 'StaraZagora'
+		echo ' ----------------- Stara Zagora ------------ '
+		meteo_lon_lat $StaraLat $StaraLon 'StaraZagora'
+	else
+		meteo_lon_lat $LeipzigLat $LeipzigLon Leipzig > /dev/null
+		meteo_lon_lat $AarhusLat $AarhusLon Aarhus > /dev/null
+		meteo_lon_lat $PratoLat $PratoLon Prato > /dev/null
+		meteo_lon_lat $StaraLat $StaraLon 'StaraZagora' > /dev/null
+	fi
+fi
 
-#rm tmp*
 R CMD BATCH ggplot_temperature.R
-eog combined_plot.png
+eog combined_plot.png &
+
+rm tmp*
+rm *csv
+rm *Rout
+rm *pdf
