@@ -3,20 +3,15 @@ library(lubridate)
 library(wesanderson)
 
 
-d <- bind_rows(
-  read_delim("Aarhus.csv", delim = " ",
+files <- list.files(pattern = "[.]csv")
+d <- list()
+for (f in files) {
+   d[[f]] <- read_delim(f, delim = " ",
              col_names = c("Date", "Time", "Temperature")) %>% 
-    mutate(Place = "Aarhus"),
-  read_delim("Leipzig.csv", delim = " ",
-             col_names = c("Date", "Time", "Temperature")) %>% 
-    mutate(Place = "Leipzig"),
-  read_delim("Prato.csv", delim = " ",
-             col_names = c("Date", "Time", "Temperature")) %>% 
-    mutate(Place = "Prato"),
-  read_delim("StaraZagora.csv", delim = " ",
-             col_names = c("Date", "Time", "Temperature")) %>% 
-    mutate(Place = "Stara Zagora")
-) %>% 
+    mutate(Place = gsub("[.]csv", "", f))
+}
+
+d <- bind_rows(d) %>% 
   mutate(Date = paste(Date, Time, sep = "/")) %>% 
   mutate(Date = as_datetime(Date, format = "%m/%d/%Y/%H"))
 

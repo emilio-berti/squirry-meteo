@@ -2,14 +2,20 @@
 
 KEY=$(cat apikey.txt)
 
-LeipzigLat=51.33962
-LeipzigLon=12.37129
-
 AarhusLat=56.162939
 AarhusLon=10.203921
 
+LeipzigLat=51.33962
+LeipzigLon=12.37129
+
+MaconLat=46.474214
+MaconLon=4.512002
+
 PratoLat=43.935718
 PratoLon=11.094147
+
+SchaffhausenLat=47.696607
+SchaffhausenLon=8.630870
 
 StaraLat=42.425777
 StaraLon=25.634464
@@ -36,7 +42,7 @@ meteo_lon_lat() {
 	while read line
 	do
 		what=$(echo $line | cut -d ":" -f 1 | tr -d '"')
-		if [ $what == temp ]
+		if [ $what == 'temp' ]
 		then
 			what="Temperature"
 		else
@@ -67,7 +73,7 @@ meteo_lon_lat() {
 	# feh tmp.png
 }
 
-#current date and time
+# current date and time
 echo
 date
 echo
@@ -81,22 +87,32 @@ then
 
 		echo ' ----------------- Aarhus ------------------ '
 		meteo_lon_lat $AarhusLat $AarhusLon Aarhus
+		
+		echo ' ----------------- Macon ------------------- '
+		meteo_lon_lat $MaconLat $MaconLon Macon
 
 		echo ' ----------------- Prato ------------------- '
 		meteo_lon_lat $PratoLat $PratoLon Prato
+
+		echo ' ----------------- Schaffhausen ------------ '
+		meteo_lon_lat $SchaffhausenLat $SchaffhausenLon Schaffhausen
 
 		echo ' ----------------- Stara Zagora ------------ '
 		meteo_lon_lat $StaraLat $StaraLon 'StaraZagora'
 	else
 		meteo_lon_lat $LeipzigLat $LeipzigLon Leipzig > /dev/null
 		meteo_lon_lat $AarhusLat $AarhusLon Aarhus > /dev/null
+		meteo_lon_lat $MaconLat $MaconLon Macon > /dev/null
 		meteo_lon_lat $PratoLat $PratoLon Prato > /dev/null
+		meteo_lon_lat $SchaffhausenLat $SchaffhausenLon Schaffhausen > /dev/null
 		meteo_lon_lat $StaraLat $StaraLon 'StaraZagora' > /dev/null
 	fi
 fi
 
 R CMD BATCH ggplot_temperature.R
+convert combined_plot.png -rotate 90 combined_plot-mobile.png 
 eog combined_plot.png &
+eog combined_plot-mobile.png &
 
 rm tmp*
 rm *csv
