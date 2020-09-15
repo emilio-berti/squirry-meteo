@@ -1,6 +1,5 @@
 library(tidyverse)
 library(lubridate)
-library(wesanderson)
 
 
 files <- list.files(pattern = "[.]csv")
