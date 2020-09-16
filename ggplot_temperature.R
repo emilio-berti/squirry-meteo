@@ -11,8 +11,9 @@ for (f in files) {
 }
 
 d <- bind_rows(d) %>% 
-  mutate(Date = paste(Date, Time, sep = "/")) %>% 
-  mutate(Date = as_datetime(Date, format = "%m/%d/%Y/%H"))
+  mutate(Date = paste(Date, Time, sep = "/") %>%
+  	as.POSIXct(format = "%m/%d/%Y/%H")) %>% 
+  mutate(Date = as_datetime(Date))
 
 d %>% 
   ggplot() +

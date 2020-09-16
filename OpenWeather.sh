@@ -100,17 +100,18 @@ then
 		echo ' ----------------- Stara Zagora ------------ '
 		#meteo_lon_lat $StaraLat $StaraLon 'StaraZagora'
 	else
-		#meteo_lon_lat $LeipzigLat $LeipzigLon Leipzig > /dev/null
+		meteo_lon_lat $LeipzigLat $LeipzigLon Leipzig > /dev/null
 		meteo_lon_lat $AarhusLat $AarhusLon Aarhus > /dev/null
-		#meteo_lon_lat $MaconLat $MaconLon Macon > /dev/null
-		#meteo_lon_lat $PratoLat $PratoLon Prato > /dev/null
-		#meteo_lon_lat $SchaffhausenLat $SchaffhausenLon Schaffhausen > /dev/null
-		#meteo_lon_lat $StaraLat $StaraLon 'StaraZagora' > /dev/null
+		meteo_lon_lat $MaconLat $MaconLon Macon > /dev/null
+		meteo_lon_lat $PratoLat $PratoLon Prato > /dev/null
+		meteo_lon_lat $SchaffhausenLat $SchaffhausenLon Schaffhausen > /dev/null
+		meteo_lon_lat $StaraLat $StaraLon 'StaraZagora' > /dev/null
 	fi
 fi
 
 R CMD BATCH ggplot_temperature.R
 convert combined_plot.png -rotate 90 combined_plot-mobile.png
+
 #eog combined_plot.png &
 #eog combined_plot-mobile.png &
 
