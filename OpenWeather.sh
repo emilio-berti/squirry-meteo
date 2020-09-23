@@ -67,7 +67,8 @@ meteo_lon_lat() {
 	do
 		at=$(echo $line | cut -d ',' -f 1)
 		temp=$(echo $line | cut -d ',' -f 2 | tr -d ' ')
-		echo $(date -d @$at +'%D %H') $temp
+		sky=$(echo $line | cut -d ',' -f 3 | tr ' ' '-')
+		echo $(date -d @$at +'%D %H') $temp $sky
 	done < tmp_hourly.txt > $3.csv
 	# gnuplot -e "filename='$3.csv'" plot_temperature.p
 	# feh tmp.png
@@ -114,7 +115,7 @@ convert combined_plot.png -rotate 90 combined_plot-mobile.png
 #eog combined_plot.png &
 #eog combined_plot-mobile.png &
 
-rm tmp*
+#rm tmp*
 #rm *csv
 rm *Rout
 rm *pdf

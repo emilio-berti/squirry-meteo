@@ -1,5 +1,9 @@
 apikey.txt
-.RData
-.Rhistory
+*.RData
+*.Rhistory
 *csv
 *png
+*csv
+combined*
+tmp*
+
