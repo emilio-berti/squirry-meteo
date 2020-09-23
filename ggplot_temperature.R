@@ -50,9 +50,11 @@ xmax <- d %>%
 xlim <- c(1, xmax)
 ymax <- length(files)
 ylim <- c(0, ymax) 
-png("combined_sky.png", width = 8*10^2.2, height = length(unique(d$Place)) * 10^2.2)
-#empty plot with correct extent
 plot.new()
+png("combined_sky.png", 
+	width = 8*10^2.2, 
+	height = length(unique(d$Place)) * 10^2.1)
+#empty plot with correct extent
 par(mar = c(3, 1, 1, 1))
 plot(seq_len(xmax), 
      seq(0, ymax, length.out = xmax),
@@ -64,13 +66,13 @@ for (name in files) {
   text(xmax, -0.5 + which(files == name), 
        gsub("[.]csv", "", name), 
        adj = 0.5, srt = 90, 
-       font = 2, cex = 2 * 12 / l)
+       font = 2, cex = 2 * 10 / l)
 }
 ticks <- rep(unique(d$Time), 2)
 ticks <- ticks[seq(1, 48, by = 3)]
 axis(side = 1, 
      at = seq(1, 48, by = 3),
-     labels = ticks, cex.axis = 1.5)
+     labels = ticks, cex.axis = 2)
 
 sub_d <- filter(d, Time %in% ticks) %>% 
   mutate(Place = factor(Place))
