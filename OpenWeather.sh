@@ -20,6 +20,8 @@ SchaffhausenLon=8.630870
 StaraLat=42.425777
 StaraLon=25.634464
 
+rm *csv
+
 meteo_lon_lat() {
 	curl -s http://api.openweathermap.org/data/2.5/onecall?lat=$1\&lon=$2\&appid={$KEY}\&units=metric -o tmp.json
 	python3.7 -m json.tool tmp.json > tmp.txt
@@ -112,11 +114,14 @@ fi
 
 R CMD BATCH ggplot_temperature.R
 convert combined_plot.png -rotate 90 combined_plot-mobile.png
+convert combined_sky.png -rotate 90 combined_sky-mobile.png
 
 #eog combined_plot.png &
 #eog combined_plot-mobile.png &
+#eog combined_sky.png &
+#eog combined_sky-mobile.png &
 
 #rm tmp*
 #rm *csv
-rm *Rout
-rm *pdf
+#rm *Rout
+#rm *pdf
