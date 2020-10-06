@@ -11,8 +11,8 @@ LeipzigLon=12.37129
 MaconLat=46.474214
 MaconLon=4.512002
 
-PratoLat=43.935718
-PratoLon=11.094147
+PratoLat=43.53286
+PratoLon=11.04407
 
 SchaffhausenLat=47.696607
 SchaffhausenLon=8.630870
@@ -72,6 +72,7 @@ meteo_lon_lat() {
 		sky=$(echo $line | cut -d ',' -f 3 | tr ' ' '-')
 		echo $(date -d @$at +'%D %H') $temp $sky
 	done < tmp_hourly.txt > $3.csv
+	cat $3.csv >> $3_long.txt
 	# gnuplot -e "filename='$3.csv'" plot_temperature.p
 	# feh tmp.png
 }
@@ -86,7 +87,7 @@ then
 	if [[ $1 == '-v' ]]
 	then
 		echo ' ----------------- Leipzig ----------------- '
-		#meteo_lon_lat $LeipzigLat $LeipzigLon Leipzig
+		meteo_lon_lat $LeipzigLat $LeipzigLon Leipzig
 
 		echo ' ----------------- Aarhus ------------------ '
 		meteo_lon_lat $AarhusLat $AarhusLon Aarhus
@@ -105,9 +106,9 @@ then
 	else
 		meteo_lon_lat $LeipzigLat $LeipzigLon Leipzig > /dev/null
 		meteo_lon_lat $AarhusLat $AarhusLon Aarhus > /dev/null
-		meteo_lon_lat $MaconLat $MaconLon Macon > /dev/null
+		#meteo_lon_lat $MaconLat $MaconLon Macon > /dev/null
 		meteo_lon_lat $PratoLat $PratoLon Prato > /dev/null
-		meteo_lon_lat $SchaffhausenLat $SchaffhausenLon Schaffhausen > /dev/null
+		#meteo_lon_lat $SchaffhausenLat $SchaffhausenLon Schaffhausen > /dev/null
 		meteo_lon_lat $StaraLat $StaraLon 'StaraZagora' > /dev/null
 	fi
 fi
@@ -116,9 +117,9 @@ R CMD BATCH ggplot_temperature.R
 convert combined_plot.png -rotate 90 combined_plot-mobile.png
 convert combined_sky.png -rotate 90 combined_sky-mobile.png
 
-#eog combined_plot.png &
+eog -f combined_plot.png &
 #eog combined_plot-mobile.png &
-#eog combined_sky.png &
+eog -f combined_sky.png &
 #eog combined_sky-mobile.png &
 
 #rm tmp*

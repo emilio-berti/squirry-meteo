@@ -22,21 +22,25 @@ d <- bind_rows(d) %>%
 d %>% 
   ggplot() +
   aes(Date, Temperature, col = Place) +
-  geom_point(pch = 20, size = 2) +
-  geom_line(size = 0.75) +
+  geom_point(pch = 20, size = 1.25) +
+  geom_line(size = 0.25) +
   scale_x_datetime(date_breaks = "6 hours",
                    date_minor_breaks = "2 hours", 
                    date_labels = "%H:%M\n%A") +
+  scale_y_continuous(breaks = seq(floor(min(d$Temperature)), ceiling(max(d$Temperature)), by = 2)) +
   scale_color_brewer(palette = "Set3") +
   xlab("") +
   ylab("Feel temperature") +
+  #ylim(c(floor(min(d$Temperature)), ceiling(max(d$Temperature)))) +
   theme_minimal() +
   theme(text = element_text(colour = "white"),
         axis.text = element_text(colour = "white"),
-        axis.text.x = element_text(angle = 90,
-                                   vjust = 0.5),
-        panel.grid.major = element_line(colour = "grey90"),
-        panel.grid.minor = element_line(colour = "grey95"),
+        axis.text.x = element_text(angle = 90, vjust = 0.5),
+        panel.grid.minor.x = element_blank(),
+        panel.grid.major.x = element_line(colour = "grey90", size = 0.1),
+        panel.grid.major.y = element_line(colour = "grey90", size = 0.1),
+        panel.grid.minor.y = element_blank(),
+        #panel.grid.minor.y = element_line(colour = "grey95", size = 0.1),
         plot.background = element_rect(fill = "grey15"))
 
 ggsave(filename = "combined_plot.png", width = 8, height = 4)
