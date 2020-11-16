@@ -11,14 +11,16 @@ LeipzigLon=12.37129
 MaconLat=46.474214
 MaconLon=4.512002
 
-PratoLat=43.935718
-PratoLon=11.094147
+PratoLat=43.53286
+PratoLon=11.04407
 
 SchaffhausenLat=47.696607
 SchaffhausenLon=8.630870
 
 StaraLat=42.425777
 StaraLon=25.634464
+
+rm *csv
 
 meteo_lon_lat() {
 	curl -s http://api.openweathermap.org/data/2.5/onecall?lat=$1\&lon=$2\&appid={$KEY}\&units=metric -o tmp.json
@@ -70,6 +72,7 @@ meteo_lon_lat() {
 		sky=$(echo $line | cut -d ',' -f 3 | tr ' ' '-')
 		echo $(date -d @$at +'%D %H') $temp $sky
 	done < tmp_hourly.txt > $3.csv
+	cat $3.csv >> $3_long.txt
 	# gnuplot -e "filename='$3.csv'" plot_temperature.p
 	# feh tmp.png
 }
@@ -90,32 +93,42 @@ then
 		meteo_lon_lat $AarhusLat $AarhusLon Aarhus
 		
 		echo ' ----------------- Macon ------------------- '
-		meteo_lon_lat $MaconLat $MaconLon Macon
+		#meteo_lon_lat $MaconLat $MaconLon Macon
 
 		echo ' ----------------- Prato ------------------- '
-		meteo_lon_lat $PratoLat $PratoLon Prato
+		#meteo_lon_lat $PratoLat $PratoLon Prato
 
 		echo ' ----------------- Schaffhausen ------------ '
-		meteo_lon_lat $SchaffhausenLat $SchaffhausenLon Schaffhausen
+		#meteo_lon_lat $SchaffhausenLat $SchaffhausenLon Schaffhausen
 
 		echo ' ----------------- Stara Zagora ------------ '
-		meteo_lon_lat $StaraLat $StaraLon 'StaraZagora'
+		#meteo_lon_lat $StaraLat $StaraLon 'StaraZagora'
 	else
 		meteo_lon_lat $LeipzigLat $LeipzigLon Leipzig > /dev/null
 		meteo_lon_lat $AarhusLat $AarhusLon Aarhus > /dev/null
-		meteo_lon_lat $MaconLat $MaconLon Macon > /dev/null
+		#meteo_lon_lat $MaconLat $MaconLon Macon > /dev/null
 		meteo_lon_lat $PratoLat $PratoLon Prato > /dev/null
-		meteo_lon_lat $SchaffhausenLat $SchaffhausenLon Schaffhausen > /dev/null
+		#meteo_lon_lat $SchaffhausenLat $SchaffhausenLon Schaffhausen > /dev/null
 		meteo_lon_lat $StaraLat $StaraLon 'StaraZagora' > /dev/null
 	fi
 fi
 
 R CMD BATCH ggplot_temperature.R
+<<<<<<< HEAD
 convert combined_plot.png -rotate 90 combined_plot-mobile.png 
 eog combined_plot.png &
 eog combined_plot-mobile.png &
+=======
+convert combined_plot.png -rotate 90 combined_plot-mobile.png
+convert combined_sky.png -rotate 90 combined_sky-mobile.png
+
+eog -f combined_plot.png &
+#eog combined_plot-mobile.png &
+eog -f combined_sky.png &
+#eog combined_sky-mobile.png &
+>>>>>>> f4869568c60ee765d84e08ca68cc73c0e25bf8b6
 
 #rm tmp*
 #rm *csv
-rm *Rout
-rm *pdf
+#rm *Rout
+#rm *pdf
