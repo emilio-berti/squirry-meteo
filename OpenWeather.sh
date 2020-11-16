@@ -22,7 +22,7 @@ StaraLon=25.634464
 
 meteo_lon_lat() {
 	curl -s http://api.openweathermap.org/data/2.5/onecall?lat=$1\&lon=$2\&appid={$KEY}\&units=metric -o tmp.json
-	python3.7 -m json.tool tmp.json > tmp.txt
+	python3 -m json.tool tmp.json > tmp.txt
 	head -n 9 tmp.txt | tail -n 2 | tr -d ' ' > tmp_sun.txt
 	head -n 11 tmp.txt | tail -n 2 | tr -d ' ' > tmp_temp.txt
 	main=$(head -n 24 tmp.txt | tail -n 1 | tr -d '",' | cut -d ':' -f 2)
@@ -112,8 +112,8 @@ fi
 
 R CMD BATCH ggplot_temperature.R
 convert combined_plot.png -rotate 90 combined_plot-mobile.png 
-#eog combined_plot.png &
-#eog combined_plot-mobile.png &
+eog combined_plot.png &
+eog combined_plot-mobile.png &
 
 #rm tmp*
 #rm *csv
