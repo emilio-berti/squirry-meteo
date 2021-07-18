@@ -32,6 +32,9 @@ df = pd.DataFrame({'date': ans['Prato']['date'],
                   'Aarhus': ans['Aarhus']['temp'],
                   'Leipzig': ans['Leipzig']['temp'],
                   'Stara': ans['Stara']['temp']})
+now = str(datetime.now())
+now = now.replace(' ', '_').split('.')[0] + '.csv'
+df.to_csv('olddata/' + now, index = True)
 df['date'] = [datetime.strptime(df['date'][i], '%Y-%m%d %H:%M') for i in range(len(df['date']))]
 
 # plot and save to pdf
@@ -51,12 +54,12 @@ xformatter = mdates.DateFormatter('%H:%M')
 plt.gcf().axes[0].xaxis.set_major_formatter(xformatter)
 plt.tick_params(axis = 'x', rotation = 90)
 ax.set_xticks(df['date'][::3])
-ax.xaxis.label.set_color('#999999')
-ax.yaxis.label.set_color('#999999')
-ax.tick_params(axis = 'x', colors = '#999999')
-ax.tick_params(axis = 'y', colors = '#999999')
-ax.spines['left'].set_color('#999999')
-ax.spines['bottom'].set_color('#999999')
-ax.spines['right'].set_color('#999999')
-ax.spines['top'].set_color('#999999')
+ax.xaxis.label.set_color('white')
+ax.yaxis.label.set_color('white')
+ax.tick_params(axis = 'x', colors = 'white')
+ax.tick_params(axis = 'y', colors = 'white')
+ax.spines['left'].set_color('white')
+ax.spines['bottom'].set_color('white')
+ax.spines['right'].set_color('white')
+ax.spines['top'].set_color('white')
 plt.savefig("plot.pdf", format = "pdf", facecolor = "black", bbox_inches = 'tight')

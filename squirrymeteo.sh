@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd ~/Proj/squirry-meteo
+cd ~/squirry-meteo
 
 echo ' - Getting OpenWeather data'
 bash get-opendata.sh
@@ -8,4 +8,6 @@ bash get-opendata.sh
 echo ' - Parsing and plotting in python'
 python3 process-data.py
 
-evince plot.pdf &
+filename=$(date | tr ' ' '_')
+cp plot.pdf oldplots/$filename.pdf
+# evince plot.pdf &
