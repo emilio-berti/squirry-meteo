@@ -3,11 +3,17 @@
 cd ~/squirry-meteo
 
 echo ' - Getting OpenWeather data'
-bash get-opendata.sh
+bash src/get-opendata.sh
 
 echo ' - Parsing and plotting in python'
-python3 process-data.py
+python3 src/process-data.py
 
 filename=$(date | tr ' ' '_')
 cp plot.pdf oldplots/$filename.pdf
-# evince plot.pdf &
+if [ $# -ne 0 ]
+then
+  if [[ $1 = "-"*"p"* ]]
+  then
+    evince plot.pdf &
+  fi
+fi

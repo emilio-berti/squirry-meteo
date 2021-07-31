@@ -1,6 +1,6 @@
 #!/bin/bash
 
-KEY=$(cat apikey.txt)
+KEY=$(cat src/apikey.txt)
 
 AarhusLat=56.162939
 AarhusLon=10.203921
@@ -24,9 +24,9 @@ meteo_lon_lat() {
 	curl -s http://api.openweathermap.org/data/2.5/onecall?lat=$1\&lon=$2\&appid={$KEY}\&units=metric
 }
 
-meteo_lon_lat $LeipzigLat $LeipzigLon > ../data/opendata/leipzig.json
-meteo_lon_lat $AarhusLat $AarhusLon > ../data/opendata/aarhus.json
-meteo_lon_lat $MaconLat $MaconLon > ../data/opendata/macon.json
-meteo_lon_lat $PratoLat $PratoLon > ../data/opendata/prato.json
-meteo_lon_lat $SchaffhausenLat $SchaffhausenLon > ../data/opendata/schaffhausen.json
-meteo_lon_lat $StaraLat $StaraLon > ../data/opendata/stara.json
+meteo_lon_lat $LeipzigLat $LeipzigLon > data/opendata/leipzig.json
+meteo_lon_lat $AarhusLat $AarhusLon > data/opendata/aarhus.json
+meteo_lon_lat $MaconLat $MaconLon > data/opendata/macon.json
+meteo_lon_lat $PratoLat $PratoLon > data/opendata/prato.json
+meteo_lon_lat $SchaffhausenLat $SchaffhausenLon > data/opendata/schaffhausen.json
+meteo_lon_lat $StaraLat $StaraLon > data/opendata/stara.json
