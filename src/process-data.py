@@ -7,8 +7,8 @@ import re
 import matplotlib.dates as mdates
 
 # load json files
-locs = listdir('opendata')
-files = ['opendata/' + locs[i] for i in range(len(locs))]
+locs = listdir('../data/opendata')
+files = ['../data/opendata/' + locs[i] for i in range(len(locs))]
 locs = list(map(lambda x: re.sub('.json', '', x).capitalize(), locs))
 ans = {}
 for f in files:
@@ -31,10 +31,12 @@ df = pd.DataFrame({'date': ans['Prato']['date'],
                   'Prato': ans['Prato']['temp'],
                   'Aarhus': ans['Aarhus']['temp'],
                   'Leipzig': ans['Leipzig']['temp'],
-                  'Stara': ans['Stara']['temp']})
+                  'Stara': ans['Stara']['temp'],
+                  'Macon': ans['Macon']['temp'],
+                  'Schaffhausen': ans['Schaffhausen']['temp']})
 now = str(datetime.now())
 now = now.replace(' ', '_').split('.')[0] + '.csv'
-df.to_csv('olddata/' + now, index = True)
+df.to_csv('../data/olddata/' + now, index = True)
 df['date'] = [datetime.strptime(df['date'][i], '%Y-%m%d %H:%M') for i in range(len(df['date']))]
 
 # plot and save to pdf
@@ -62,4 +64,4 @@ ax.spines['left'].set_color('white')
 ax.spines['bottom'].set_color('white')
 ax.spines['right'].set_color('white')
 ax.spines['top'].set_color('white')
-plt.savefig("plot.pdf", format = "pdf", facecolor = "black", bbox_inches = 'tight')
+plt.savefig("../plot.pdf", format = "pdf", facecolor = "black", bbox_inches = 'tight')
