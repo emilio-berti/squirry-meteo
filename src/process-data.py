@@ -5,6 +5,7 @@ from datetime import datetime
 import matplotlib.pyplot as plt
 import re
 import matplotlib.dates as mdates
+import numpy as np
 
 # load json files
 locs = listdir('data/opendata')
@@ -47,7 +48,9 @@ palette = plt.get_cmap('Set2')
 num = 0
 for column in df.drop('date', axis = 1):
     num += 1
-    plt.plot(df['date'], df[column], marker = '', color = palette(num), linewidth = 2, alpha = 1, label = column)
+    x = np.array(df['date'])
+    y = np.array(df[column])
+    plt.plot(x, y, marker = '', color = palette(num), linewidth = 2, alpha = 1, label = column)
 
 plt.legend(loc = 1, ncol = 1)
 plt.xlabel("Time")
