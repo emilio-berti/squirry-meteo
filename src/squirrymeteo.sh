@@ -17,3 +17,5 @@ then
     evince plot.pdf &
   fi
 fi
+
+cd -
